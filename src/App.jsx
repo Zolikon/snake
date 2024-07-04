@@ -50,7 +50,7 @@ function App() {
           <img src="/icon.svg" className="h-3/5 rounded-xl object-contain" />
           <div className="text-center font-bold text-3xl text-stone-300 select-none">nake</div>
         </header>
-        <main className="flex flex-col flex-grow items-center justify-center">
+        <main className="flex flex-col flex-grow items-center justify-center overflow-y-auto">
           <Snake />
         </main>
 
