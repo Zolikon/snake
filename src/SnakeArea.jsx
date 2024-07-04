@@ -4,10 +4,7 @@ import { useSignal } from "@preact/signals-react";
 
 function SnakeArea({ numberOFCols, numberOfRows, snake, apple }) {
   useSignal();
-  const cellSizeInPixels = Math.min(
-    (window.innerWidth > 500 ? window.innerWidth * 0.8 : window.innerWidth * 0.7) / numberOFCols,
-    50
-  );
+  const cellSizeInPixels = Math.min((window.innerWidth * 0.7) / numberOFCols, 50);
 
   function isSnakeBodyCell(i, j) {
     return snake.slice(1, snake.length - 1).some(([x, y]) => x === i && y === j);

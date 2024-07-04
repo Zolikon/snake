@@ -106,12 +106,12 @@ function Snake() {
   }, [isSnakeCollidedWithItself, isSnakeHeadOutside, isSnakeWillEatApple, isGameStarted.value]);
 
   return (
-    <div className="h-4/5 w-4/5 sm:w-1/4 flex flex-col items-center justify-center">
+    <div className="h-[90%] w-4/5 sm:w-1/4 flex flex-col items-center justify-start">
       <div className="flex items-center justify-center w-full sm:gap-20">
-        <button onClick={newGame} className="bg-green-700 py-2 px-4 rounded-md m-4 text-stone-200 sm:text-2xl">
+        <button onClick={newGame} className="bg-green-700 py-2 px-4 rounded-md m-4 text-stone-200 sm:text-xl">
           New game
         </button>
-        <p className="font-extrabold sm:text-4xl md:w-64">Score: {score}</p>
+        <p className="font-extrabold sm:text-2xl md:w-64">Score: {score}</p>
       </div>
       <SnakeArea numberOFCols={numberOfCols} numberOfRows={numberOfRows} snake={snake} apple={apple} />
       <div className="h-1/5 w-full flex flex-col items-center justify-start m-2">
