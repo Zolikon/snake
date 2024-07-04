@@ -4,7 +4,10 @@ import { useSignal } from "@preact/signals-react";
 
 function SnakeArea({ numberOFCols, numberOfRows, snake, apple }) {
   useSignal();
-  const cellSizeInPixels = Math.min((window.innerWidth * 0.8) / numberOFCols, 50);
+  const cellSizeInPixels = Math.min(
+    (window.innerWidth > 500 ? window.innerWidth * 0.8 : window.innerWidth * 0.7) / numberOFCols,
+    50
+  );
 
   function isSnakeBodyCell(i, j) {
     return snake.slice(1, snake.length - 1).some(([x, y]) => x === i && y === j);
@@ -48,7 +51,7 @@ function SnakeArea({ numberOFCols, numberOfRows, snake, apple }) {
 
   return (
     <div
-      className="flex border-4 p-2 border-black relative items-center justify-center w-4/5 p-2"
+      className="flex border-4 p-4 border-black relative items-center justify-center w-4/5"
       style={{ width: cellSizeInPixels * numberOFCols, height: cellSizeInPixels * numberOfRows }}
     >
       {!isGameOver.value ? (
@@ -61,7 +64,12 @@ function SnakeArea({ numberOFCols, numberOfRows, snake, apple }) {
             {new Array(numberOfRows).fill(1).map((_, j) => (
               <div
                 key={"row" + j}
-                style={{ width: `${cellSizeInPixels - 4}px`, height: `${cellSizeInPixels - 4}px`, margin: "2px" }}
+                style={{
+                  width: `${cellSizeInPixels - 4}px`,
+                  height: `${cellSizeInPixels - 4}px`,
+                  margin: "2px",
+                  padding: "2px",
+                }}
               >
                 {isSnakeHeadCell(i, j) && (
                   <img src="/head.svg" className={`h-full w-full object-contain ${directionToHeadRotation()}`} />

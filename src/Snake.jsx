@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import SnakeArea from "./SnakeArea";
-import { direction, isGameOver, nextDirection } from "./signalHandler";
+import { direction, isGameOver, isGameStarted, nextDirection } from "./signalHandler";
 import { useSignals } from "@preact/signals-react/runtime";
 import Keyboard from "./Keyboard";
 
@@ -32,6 +32,7 @@ function Snake() {
   useSignals();
   const [snake, setSnake] = useState(SNAKE_INITIAL_POSITION);
   const [apple, setApple] = useState(randomApplePosition());
+  const [score, setScore] = useState(0);
 
   function isGameWon() {
     return snake.length === numberOfCols * numberOfRows;
@@ -64,10 +65,17 @@ function Snake() {
     nextDirection.value = "right";
     setApple(randomApplePosition());
     isGameOver.value = false;
+    isGameStarted.value = true;
+    setScore(0);
+  }
+
+  function loseGame() {
+    isGameOver.value = true;
+    isGameStarted.value = false;
   }
 
   useEffect(() => {
-    if (isGameOver.value) return;
+    if (isGameOver.value || !isGameStarted.value) return;
     const intervalId = setInterval(() => {
       if (isGameWon()) {
         clearInterval(intervalId);
@@ -81,7 +89,7 @@ function Snake() {
         const newY = head[1] + DIRECTION_MAP[direction.value][1];
         if (isSnakeHeadOutside(newX, newY) || isSnakeCollidedWithItself(newX, newY)) {
           clearInterval(intervalId);
-          isGameOver.value = true;
+          loseGame();
         }
         if (isSnakeWillEatApple(newX, newY)) {
           setApple(randomApplePosition());
@@ -92,21 +100,22 @@ function Snake() {
         }
         return [[newX, newY]];
       });
+      setScore((prevScore) => prevScore + 1);
     }, 500);
     return () => clearInterval(intervalId);
-  }, [isSnakeCollidedWithItself, isSnakeHeadOutside, isSnakeWillEatApple]);
+  }, [isSnakeCollidedWithItself, isSnakeHeadOutside, isSnakeWillEatApple, isGameStarted.value]);
 
   return (
-    <div className="h-4/5 w-4/5 flex flex-col items-center justify-center">
+    <div className="h-4/5 w-4/5 sm:w-1/4 flex flex-col items-center justify-center">
+      <div className="flex items-center justify-center w-full sm:gap-20">
+        <button onClick={newGame} className="bg-green-700 py-2 px-4 rounded-md m-4 text-stone-200 sm:text-2xl">
+          New game
+        </button>
+        <p className="font-extrabold sm:text-4xl md:w-64">Score: {score}</p>
+      </div>
       <SnakeArea numberOFCols={numberOfCols} numberOfRows={numberOfRows} snake={snake} apple={apple} />
       <div className="h-1/5 w-full flex flex-col items-center justify-start m-2">
-        {isGameOver.value ? (
-          <button onClick={newGame} className="bg-green-700 py-2 px-4 rounded-md m-2 text-stone-200">
-            New game
-          </button>
-        ) : (
-          <Keyboard />
-        )}
+        <Keyboard />
       </div>
     </div>
   );

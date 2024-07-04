@@ -15,4 +15,25 @@ export function clearKeyPressed() {
   downKeyPressed.value = false;
 }
 
+export function indicateLeftNext() {
+  if (direction.value === "right") return;
+  nextDirection.value = "left";
+}
+
+export function indicateRightNext() {
+  if (direction.value === "left") return;
+  nextDirection.value = "right";
+}
+
+export function indicateUpNext() {
+  if (direction.value === "down") return;
+  nextDirection.value = "up";
+}
+
+export function indicateDownNext() {
+  if (direction.value === "up") return;
+  nextDirection.value = "down";
+}
+
+export const isGameStarted = signal(false);
 export const isGameOver = signal(false);

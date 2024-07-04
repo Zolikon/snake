@@ -2,10 +2,12 @@ import { useRef } from "react";
 import Snake from "./Snake";
 import {
   clearKeyPressed,
-  direction,
   downKeyPressed,
+  indicateDownNext,
+  indicateLeftNext,
+  indicateRightNext,
+  indicateUpNext,
   leftKeyPressed,
-  nextDirection,
   rightKeyPressed,
   upKeyPressed,
 } from "./signalHandler";
@@ -24,20 +26,16 @@ function App() {
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp") {
       upKeyPressed.value = true;
-      if (direction.value === "down") return;
-      nextDirection.value = "up";
+      indicateUpNext();
     } else if (event.key === "ArrowDown") {
       downKeyPressed.value = true;
-      if (direction.value === "up") return;
-      nextDirection.value = "down";
+      indicateDownNext();
     } else if (event.key === "ArrowLeft") {
       leftKeyPressed.value = true;
-      if (direction.value === "right") return;
-      nextDirection.value = "left";
+      indicateLeftNext();
     } else if (event.key === "ArrowRight") {
       rightKeyPressed.value = true;
-      if (direction.value === "left") return;
-      nextDirection.value = "right";
+      indicateRightNext();
     }
   });
 
