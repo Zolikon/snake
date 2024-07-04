@@ -35,7 +35,7 @@ function DirectionButton({ name, isPressed, onClickAction }) {
         onClickAction();
         clearKeyPressed();
       }}
-      className={`w-12 h-12 sm:w-24 sm:h-24  hover:bg-blue-800 ${
+      className={`w-12 h-12 sm:w-16 sm:h-16  hover:bg-blue-800 ${
         isPressed ? "bg-blue-800" : "bg-blue-600"
       } flex items-center justify-center rounded-md border-4 border-stone-800 cursor-pointer`}
     >
